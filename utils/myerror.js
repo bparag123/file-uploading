@@ -4,7 +4,6 @@ class MyErrors extends Error{
         this.statusCode = statusCode,
         this.errMsg = errMsg
     }
-
     static invalidFileFormat(status, message) {
         return new MyErrors(status, message)
     }
