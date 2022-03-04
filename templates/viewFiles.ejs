@@ -11,14 +11,14 @@
     <%- include("./partials/navbar.ejs") %> 
 <div class="container">
     <%# Checking if no files found %> 
-        <% if (data.length === 0) { %>
+        <% if (fileData.length === 0) { %>
             <div class="card-panel red lighten-2 col s6">No Files Uploaded</div>
         <% } else { %>
             <ul class="collection col s6">
                 <%# Looping Over the files %> 
-            <% for( let index = 0; index < data.length; index++ ) { %>
+            <% for( let index = 0; index < fileData.length; index++ ) { %>
                 <%# This is a partial for creating links to files %> 
-                <%- include("./partials/fileLink.ejs", {val:data[index]}) %>
+                <%- include("./partials/fileLink.ejs", {val:fileData[index]}) %>
                 
             <% } %>
             </ul>

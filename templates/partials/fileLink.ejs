@@ -1,6 +1,9 @@
 <li class="collection-item">
-  <a href="<%= val.url %>"><%= val.name %></a>
-  <p>
-    <b>Uploaded at</b> : <%= val.createdAt %> <br />
-  </p>
+  <% if (val.type === "img") { %>
+  <img src="<%= val.data.url %>" alt="" srcset="" />
+  <% } else { %>
+  <video src="<%= val.data.url %>" controls autoplay></video>
+  <% } %>
+
+  <p><b>Uploaded at</b> : <%= val.data.createdAt %> <br /></p>
 </li>

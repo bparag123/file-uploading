@@ -11,7 +11,7 @@ const upload = async (req, res, next) => {
     }
     //Creating Files Model Instance
     const storeFile = new Files({
-        url: path.join("/files", req.file.filename),
+        url: req.fileUrls[0],
         name: req.file.originalname
     })
     try {
@@ -33,9 +33,15 @@ const uploadMany = async (req, res, next) => {
         })
     }
     //construct the array of objects to store into database
-    const fileData = req.files.map((val) => {
-        return { url: path.join(__dirname, "../Uploaded", val.filename), name: val.originalname }
-    })
+    const fileData = []
+    for(let i=0; i<req.files.length;i++){
+        fileData.push({
+            url: req.fileUrls[i],
+            name: req.files[i].originalname,
+            
+        })
+    }
+    
     try {
         await Files.insertMany(fileData)
     } catch (error) {
@@ -47,7 +53,16 @@ const uploadMany = async (req, res, next) => {
 const myUploads = async (req, res) => {
     try {
         const data = await Files.find()
-        res.render("viewFiles", { data })
+        const fileData = []
+        data.map((element)=>{
+            let type = element.name.split(".")[1] === "mp4" ? "video" : "img"
+            fileData.push({
+                data:element,
+                type
+            })
+        })
+        console.log(fileData);
+        res.render("viewFiles", { fileData })
     } catch (error) {
         next(error)
     }
